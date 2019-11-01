@@ -17157,6 +17157,11 @@ PrefabInstance:
       propertyPath: m_CharacterValidation
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
+        type: 3}
+      propertyPath: m_CharacterLimit
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8307763309953543132, guid: 9abd91473bd87094f81318823b58edc4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -32470,6 +32475,11 @@ PrefabInstance:
       propertyPath: m_CharacterValidation
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
+        type: 3}
+      propertyPath: m_CharacterLimit
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8307763309953543132, guid: 9abd91473bd87094f81318823b58edc4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -37938,6 +37948,11 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 1025870483}
+    - target: {fileID: 3463782280456441382, guid: 984066e9973387047bb3d54752b3f5ea,
+        type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3463782279706941181, guid: 984066e9973387047bb3d54752b3f5ea,
         type: 3}
       propertyPath: m_AnchoredPosition.x

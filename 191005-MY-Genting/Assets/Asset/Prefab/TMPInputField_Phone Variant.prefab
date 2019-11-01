@@ -182,6 +182,16 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 25.29
       objectReference: {fileID: 0}
+    - target: {fileID: 2267640678948947276, guid: 1862858ed9231414d8aa947619d9f5bb,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 2267640678929178003, guid: 1862858ed9231414d8aa947619d9f5bb,
+        type: 3}
+      propertyPath: m_VerticalScrollbarSpacing
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2267640679058733363, guid: 1862858ed9231414d8aa947619d9f5bb,
         type: 3}
       propertyPath: m_fontAsset
@@ -239,15 +249,20 @@ PrefabInstance:
       propertyPath: m_fontSizeMin
       value: 12
       objectReference: {fileID: 0}
-    - target: {fileID: 2267640678948947276, guid: 1862858ed9231414d8aa947619d9f5bb,
+    - target: {fileID: 2267640677446560058, guid: 1862858ed9231414d8aa947619d9f5bb,
         type: 3}
-      propertyPath: m_fontSize
-      value: 28
+      propertyPath: m_SizeDelta.y
+      value: 39.8
       objectReference: {fileID: 0}
-    - target: {fileID: 2267640678948947276, guid: 1862858ed9231414d8aa947619d9f5bb,
+    - target: {fileID: 2267640678948947275, guid: 1862858ed9231414d8aa947619d9f5bb,
         type: 3}
-      propertyPath: m_fontSizeBase
-      value: 28
+      propertyPath: m_SizeDelta.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2267640678948947275, guid: 1862858ed9231414d8aa947619d9f5bb,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -27.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1862858ed9231414d8aa947619d9f5bb, type: 3}
@@ -263,6 +278,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: TMPInputField_Phone Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
+        type: 3}
+      propertyPath: m_ContentType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
+        type: 3}
+      propertyPath: m_KeyboardType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
+        type: 3}
+      propertyPath: m_CharacterValidation
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
+        type: 3}
+      propertyPath: m_RegexValue
+      value: ^[0-9 \-]+$
+      objectReference: {fileID: 0}
+    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3463782279756046381}
     - target: {fileID: 8307763309953543132, guid: 9abd91473bd87094f81318823b58edc4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -368,52 +423,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8307763309953543134, guid: 9abd91473bd87094f81318823b58edc4,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 20f69e34feac8b140a084cbf2a62541d,
-        type: 3}
-    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
-        type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
-        type: 3}
-      propertyPath: m_ContentType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
-        type: 3}
-      propertyPath: m_KeyboardType
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
-        type: 3}
-      propertyPath: m_CharacterValidation
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
-        type: 3}
-      propertyPath: m_RegexValue
-      value: ^[0-9 \-]+$
-      objectReference: {fileID: 0}
-    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
-        type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
-        type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
-        type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 3463782279756046381}
     - target: {fileID: 8307763310532932674, guid: 9abd91473bd87094f81318823b58edc4,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -459,11 +468,27 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8307763309789906392, guid: 9abd91473bd87094f81318823b58edc4,
+        type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8307763309789906392, guid: 9abd91473bd87094f81318823b58edc4,
+        type: 3}
+      propertyPath: m_overflowMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8307763309869964556, guid: 9abd91473bd87094f81318823b58edc4,
         type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: ae6cdc0c660be8841a8ba66ea684ed92,
+        type: 3}
+    - target: {fileID: 8307763309953543134, guid: 9abd91473bd87094f81318823b58edc4,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 20f69e34feac8b140a084cbf2a62541d,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9abd91473bd87094f81318823b58edc4, type: 3}

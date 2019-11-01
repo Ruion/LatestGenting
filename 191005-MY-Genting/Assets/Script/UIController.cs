@@ -466,6 +466,13 @@ public class UIController : MonoBehaviour
         Card_Info_Warning_Input[0].SetActive(true);
         Card_Info_Warning_Input[1].SetActive(false);
 
+        if(Card_Info_Input_Field[0].text == "")
+        {
+            ci_input1 = false;
+            Card_Info_Warning_Input[0].SetActive(false);
+            Card_Info_Warning_Input[1].SetActive(true);
+        }
+
         if (exist)
         {
             if(ci_input1 && ci_input2)
@@ -488,6 +495,14 @@ public class UIController : MonoBehaviour
         ci_input2 = true;
         Card_Info_Warning_Input[2].SetActive(true);
         Card_Info_Warning_Input[3].SetActive(false);
+
+        if (Card_Info_Input_Field[2].text == "")
+        {
+            ci_input2 = false;
+            Card_Info_Warning_Input[2].SetActive(false);
+            Card_Info_Warning_Input[3].SetActive(true);
+        }
+
         if (exist)
         {
             if (ci_input1 && ci_input2)
@@ -533,6 +548,14 @@ public class UIController : MonoBehaviour
         du_input1 = true;
         DU_Warning_Input[0].SetActive(true);
         DU_Warning_Input[1].SetActive(false);
+
+        if(DU_Input_Field[0].text == "")
+        {
+            du_input1 = false;
+            DU_Warning_Input[0].SetActive(false);
+            DU_Warning_Input[1].SetActive(true);
+        }
+
         if(du_input1 && du_input2 && du_input3)
         {
             DU_Button.interactable = true;
@@ -541,10 +564,16 @@ public class UIController : MonoBehaviour
     public void DU_setInput2()
     {
         du_input2 = Regex.IsMatch(DU_Input_Field[1].text, MailPattern);
+
         if(du_input2)
         {
             DU_Warning_Input[2].SetActive(true);
             DU_Warning_Input[3].SetActive(false);
+        }
+        else
+        {
+            DU_Warning_Input[2].SetActive(false);
+            DU_Warning_Input[3].SetActive(true);
         }
         if (du_input1 && du_input2 && du_input3)
         {
@@ -556,6 +585,13 @@ public class UIController : MonoBehaviour
         du_input3 = true;
         DU_Warning_Input[4].SetActive(true);
         DU_Warning_Input[5].SetActive(false);
+
+        if (DU_Input_Field[0].text == "")
+        {
+            du_input3 = false;
+            DU_Warning_Input[4].SetActive(false);
+            DU_Warning_Input[5].SetActive(true);
+        }
         if (du_input1 && du_input2 && du_input3)
         {
             DU_Button.interactable = true;
