@@ -12,8 +12,6 @@ public class VoucherDatabase : MonoBehaviour
     public VoucherEntity ChosenVoucherEntity;
     public List<VoucherEntity> myList = new List<VoucherEntity>();
 
-    public VoucherGivenSummary Voucher_Given;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -44,13 +42,6 @@ public class VoucherDatabase : MonoBehaviour
         {
             string todaydate = DateTime.Now.Date.ToString();
             PlayerPrefs.SetString("TheDate", todaydate);
-
-            PlayerPrefs.SetInt("Voucher-TheBackeryRM10", 0);
-            PlayerPrefs.SetInt("Voucher-MedanSeleraRM20", 0);
-            PlayerPrefs.SetInt("Voucher-FuHuRM50", 0);
-            PlayerPrefs.SetInt("Voucher-MoltenChocolateBuy1Free2", 0);
-            PlayerPrefs.SetInt("Voucher-GongChaFree1", 0);
-            PlayerPrefs.SetInt("Voucher-SanFranciscoFree1", 0);
         }
         else
         {
@@ -90,7 +81,6 @@ public class VoucherDatabase : MonoBehaviour
                     }
                     ResetDailyData(ve);
                 }
-                Voucher_Given.InsertData(0, 0, 0, 0, 0, 0);
                 string todaydate = DateTime.Now.Date.ToString();
                 PlayerPrefs.SetString("TheDate", todaydate);
             }

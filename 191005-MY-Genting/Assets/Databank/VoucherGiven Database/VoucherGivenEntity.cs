@@ -18,7 +18,7 @@ namespace DataBank
         public string _dateCreated; // Auto generated timestamp
 
         //INSERT Data
-        public VoucherGivenEntity(int voucher1, int voucher2, int voucher3, int voucher4, int voucher5, int voucher6)
+        public VoucherGivenEntity(int voucher1, int voucher2, int voucher3, int voucher4, int voucher5, int voucher6, string datetime)
         {
             _voucher1 = voucher1;
             _voucher2 = voucher2;
@@ -26,7 +26,7 @@ namespace DataBank
             _voucher4 = voucher4;
             _voucher5 = voucher5;
             _voucher6 = voucher6;
-            _dateCreated = DateTime.Now.Date.ToString("yyyy-MM-dd HH:mm:ss");
+            _dateCreated = datetime;
         }
 
         //GET Data

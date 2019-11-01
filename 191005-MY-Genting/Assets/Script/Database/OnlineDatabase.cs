@@ -23,8 +23,12 @@ public class OnlineDatabase : MonoBehaviour
     public Text greencount_text;
     public Text redcount_text;
 
-    int greencount;
-    int redcount;
+    int user_greencount;
+    int user_redcount;
+    int duprefer_greencount;
+    int duprefer_redcount;
+    int voucherdis_greencount;
+    int voucherdis_redcount;
 
     // Start is called before the first frame update
     void Start()
@@ -52,8 +56,12 @@ public class OnlineDatabase : MonoBehaviour
             else
             {
                 Debug.Log("Connection Success!");
-                redcount = 0;
-                greencount = 0;
+                user_greencount = 0;
+                user_redcount = 0;
+                duprefer_greencount = 0;
+                duprefer_redcount = 0;
+                voucherdis_greencount = 0;
+                voucherdis_redcount = 0;
                 SyncUserData();
             }
         }
@@ -109,6 +117,9 @@ public class OnlineDatabase : MonoBehaviour
                 {
                     Debug.Log("User Sync Error : " + www.error);
                     //break;
+                    user_redcount += 1;
+                    redcount_text.text = user_redcount + " | " + duprefer_redcount + " | " + voucherdis_redcount;
+                    redbar.SetActive(true);
                 }
                 else
                 {
@@ -119,6 +130,9 @@ public class OnlineDatabase : MonoBehaviour
                     {
                         userdb.UpdateDataOnline(a);
                         Debug.LogWarning("User Data has been successfully Updated!!");
+                        user_greencount += 1;
+                        greencount_text.text = user_greencount + " | " + duprefer_greencount + " | " + voucherdis_greencount;
+                        greenbar.SetActive(true);
                     }                    
                 }
             }
@@ -162,7 +176,10 @@ public class OnlineDatabase : MonoBehaviour
                 if (www.isNetworkError || www.isHttpError)
                 {
                     Debug.Log("DoubleUp Reference Sync Error : " + www.error);
-                    //break;
+                    //break;.
+                    duprefer_redcount += 1;
+                    redcount_text.text = user_redcount + " | " + duprefer_redcount + " | " + voucherdis_redcount;
+                    redbar.SetActive(true);
                 }
                 else
                 {
@@ -173,6 +190,9 @@ public class OnlineDatabase : MonoBehaviour
                     {
                         duprdb.UpdateOnlineStatusData(s);
                         Debug.LogWarning("Reference Data has been successfully updated!");
+                        duprefer_greencount += 1;
+                        greencount_text.text = user_greencount + " | " + duprefer_greencount + " | " + voucherdis_greencount;
+                        greenbar.SetActive(true);
                     }
                 }
             }
@@ -220,6 +240,9 @@ public class OnlineDatabase : MonoBehaviour
                 {
                     Debug.Log("Voucher Distribution Sync Error : " + www.error);
                     //break;
+                    voucherdis_redcount += 1;
+                    redcount_text.text = user_redcount + " | " + duprefer_redcount + " | " + voucherdis_redcount;
+                    redbar.SetActive(true);
                 }
                 else
                 {
@@ -230,10 +253,15 @@ public class OnlineDatabase : MonoBehaviour
                     {
                         vddb.UpdateOnlineStatusData(d);
                         Debug.LogWarning("Voucher Distribution Data has been successfully updated!");
+                        voucherdis_greencount += 1;
+                        greencount_text.text = user_greencount + " | " + duprefer_greencount + " | " + voucherdis_greencount;
+                        greenbar.SetActive(true);
                     }
                 }
             }
         }
+        greenbar.GetComponent<StatusBar>().Finish();
+        redbar.GetComponent<StatusBar>().Finish();
     }
     #endregion
 
