@@ -249,11 +249,6 @@ PrefabInstance:
       propertyPath: m_fontSizeMin
       value: 12
       objectReference: {fileID: 0}
-    - target: {fileID: 2267640677446560058, guid: 1862858ed9231414d8aa947619d9f5bb,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 39.8
-      objectReference: {fileID: 0}
     - target: {fileID: 2267640678948947275, guid: 1862858ed9231414d8aa947619d9f5bb,
         type: 3}
       propertyPath: m_SizeDelta.y
