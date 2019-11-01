@@ -6,6 +6,7 @@ public class StatusBar : MonoBehaviour
 {
     public float sec = 2f;
     public bool finish = false;
+    public bool ignoreFinish = false;
 
     private void OnEnable()
     {
@@ -13,9 +14,14 @@ public class StatusBar : MonoBehaviour
         StartCoroutine(FadeOut());
     }
 
+    public void StartFadeOut()
+    {
+        StartCoroutine(FadeOut());
+    }
+
     IEnumerator FadeOut()
     {
-        while (!finish) yield return null;
+        if (!ignoreFinish) { while (!finish) yield return null; }
 
         yield return new WaitForSecondsRealtime(sec);
 
@@ -25,6 +31,11 @@ public class StatusBar : MonoBehaviour
     public void Finish()
     {
         finish = true;
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
 }

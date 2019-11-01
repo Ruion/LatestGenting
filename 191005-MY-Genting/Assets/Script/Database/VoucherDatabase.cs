@@ -85,7 +85,7 @@ public class VoucherDatabase : MonoBehaviour
                     ResetDailyData(ve);
                 }
                 //given voucher
-                /*int g_v1 = PlayerPrefs.GetInt("given-TheBackeryRM10", 0);
+                int g_v1 = PlayerPrefs.GetInt("given-TheBackeryRM10", 0);
                 int g_v2 = PlayerPrefs.GetInt("given-MedanSeleraRM20", 0);
                 int g_v3 = PlayerPrefs.GetInt("given-FuHuRM50", 0);
                 int g_v4 = PlayerPrefs.GetInt("given-MoltenChocolateBuy1Free2", 0);
@@ -103,7 +103,7 @@ public class VoucherDatabase : MonoBehaviour
                 voucher_remaining_database.InsertData(r_v1, r_v2, r_v3, r_v4, r_v5, r_v6, temp);
 
                 //reset playerpref
-                SetPlayerpref();*/
+                SetPlayerpref();
 
                 string todaydate = DateTime.Now.Date.ToString();
                 PlayerPrefs.SetString("TheDate", todaydate);
@@ -120,6 +120,8 @@ public class VoucherDatabase : MonoBehaviour
         PlayerPrefs.SetInt("given-MoltenChocolateBuy1Free2", 0);
         PlayerPrefs.SetInt("given-GongChaFree1", 0);
         PlayerPrefs.SetInt("given-SanFranciscoFree1", 0);
+
+        Debug.LogError("Player given summary : " + PlayerPrefs.GetInt("given-TheBackeryRM10") + " | " + PlayerPrefs.GetInt("remaining-MedanSeleraRM20") + " | " + PlayerPrefs.GetInt("given-FuHuRM50") + " | " + PlayerPrefs.GetInt("given-MoltenChocolateBuy1Free2") +  " | " + PlayerPrefs.GetInt("given-GongChaFree1") + " | " + PlayerPrefs.GetInt("given-SanFranciscoFree1"));
 
         PlayerPrefs.SetInt("remaining-TheBackeryRM10", PlayerPrefs.GetInt("TheBackeryRM10", 45));
         PlayerPrefs.SetInt("remaining-MedanSeleraRM20", PlayerPrefs.GetInt("MedanSeleraRM20", 12));

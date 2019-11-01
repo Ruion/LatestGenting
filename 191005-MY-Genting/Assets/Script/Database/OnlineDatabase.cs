@@ -8,10 +8,14 @@ using UnityEngine.UI;
 
 public class OnlineDatabase : MonoBehaviour
 {
-    public const string userURL = "http://191005-my-genting.unicom-interactive-digital.com/public/api/submit-player-data";
-    public const string dupreferURL = "http://191005-my-genting.unicom-interactive-digital.com/public/api/submit-reference-data";
-    public const string voucherdistributionURL = "http://191005-my-genting.unicom-interactive-digital.com/public/api/submit-voucher_distribution-data";
+    //public const string userURL = "http://191005-my-genting.unicom-interactive-digital.com/public/api/submit-player-data";
+    //public const string dupreferURL = "http://191005-my-genting.unicom-interactive-digital.com/public/api/submit-reference-data";
+    //public const string voucherdistributionURL = "http://191005-my-genting.unicom-interactive-digital.com/public/api/submit-voucher_distribution-data";
     public const string CheckConnectionURL = "https://www.google.com/";
+
+    public const string userURL = "https://191005-my-genting.unicom-interactive-digital.com/public/api/submit-player-data";
+    public const string dupreferURL = "https://191005-my-genting.unicom-interactive-digital.com/public/api/submit-reference-data";
+    public const string voucherdistributionURL = "https://191005-my-genting.unicom-interactive-digital.com/public/api/submit-voucher_distribution-data";
 
     public UserDatabase userdb;
     public DupReferDatabase duprdb;

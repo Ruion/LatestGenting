@@ -11,7 +11,7 @@ namespace DataBank
     {
         private const String CodistanTag = "Codistan: StockChangesDb:\t";
 
-        private const String TABLE_NAME = "Voucher_Given_Summary";
+        private const String TABLE_NAME = "Stock_Changes_Summary";
         private const String KEY_ID = "id";
         private const String KEY_VOUCHER1 = "TheBakeryRM10";
         private const String KEY_VOUCHER2 = "MedanSeleraRM20";

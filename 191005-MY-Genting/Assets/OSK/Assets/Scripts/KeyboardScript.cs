@@ -40,16 +40,22 @@ public class KeyboardScript : MonoBehaviour
         if (inputFieldTMPro.contentType == TMPro.TMP_InputField.ContentType.IntegerNumber)
         {
             int out_;
-            if(int.TryParse(alphabet, out out_)) inputFieldTMPro.text = inputFieldTMPro.text.Insert(inputFieldTMPro.caretPosition, alphabet); //inputFieldTMPro.text = inputFieldTMPro.text + alphabet;
-                                                                                                                                              //  if(int.TryParse(alphabet, out out_)) inputFieldTMPro.text += alphabet;
+         //   if(int.TryParse(alphabet, out out_)) inputFieldTMPro.text = inputFieldTMPro.text.Insert(inputFieldTMPro.caretPosition, alphabet); //inputFieldTMPro.text = inputFieldTMPro.text + alphabet;
+            if(int.TryParse(alphabet, out out_)) inputFieldTMPro.text += alphabet;
             
             }
-        else inputFieldTMPro.text = inputFieldTMPro.text.Insert(inputFieldTMPro.caretPosition, alphabet); //inputFieldTMPro.text = inputFieldTMPro.text + alphabet;
-                                                                                                          //   else inputFieldTMPro.text += alphabet;
-        Debug.Log("caret position after type: " + inputFieldTMPro.caretPosition);
-        inputFieldTMPro.caretPosition++;
-        //   if (caretPos == 0) { inputFieldTMPro.caretPosition--; inputFieldTMPro.ActivateInputField(); }
-        //  inputFieldTMPro.caretPosition = inputFieldTMPro.stringPosition;
+     //  else inputFieldTMPro.text = inputFieldTMPro.text.Insert(inputFieldTMPro.caretPosition, alphabet); //inputFieldTMPro.text = inputFieldTMPro.text + alphabet;
+       else inputFieldTMPro.text += alphabet;
+
+        StartCoroutine(MoveToEnd());
+    }
+
+    IEnumerator MoveToEnd()
+    {
+        yield return new WaitForEndOfFrame();
+
+        inputFieldTMPro.MoveTextEnd(false);
+       inputFieldTMPro.MoveToEndOfLine(false, false);
     }
 
     public void BackSpace()
