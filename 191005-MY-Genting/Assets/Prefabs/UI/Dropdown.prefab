@@ -555,7 +555,7 @@ MonoBehaviour:
     m_Options:
     - m_Text: Malaysia (+60)
       m_Image: {fileID: 0}
-    - m_Text: Algeria (+213)
+    - m_Text: Singapore (+65)
       m_Image: {fileID: 0}
     - m_Text: Andorra (+376)
       m_Image: {fileID: 0}

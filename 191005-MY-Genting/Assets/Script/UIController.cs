@@ -24,20 +24,20 @@ public class UIController : MonoBehaviour
     public GameObject Spin_Object;
     public Sprite[] Voucher_Logo_Sprite;
     public Image[] voucher_spin_prize;
-    public Text[] Registration_Input_Field;
+    public TMP_InputField[] Registration_Input_Field;
     public TMP_Dropdown Registration_Phone_Country;
     public Button Registration_Button;
-    public Text Registration_Input_Field_Inherit;
+    public TMP_InputField Registration_Input_Field_Inherit;
     public GameObject[] Registration_Warning_Input;
     public Image Loading_Card;
-    public Text[] Card_Info_Input_Field;
-    public InputField[] Card_Info_Input_Field_Parent;
+    public TMP_InputField[] Card_Info_Input_Field;
+    public TMP_InputField[] Card_Info_Input_Field_Parent;
     public Button Card_Info_Redeem_Button;
     public Button Card_Info_DU_Button;
     public TMP_Dropdown Card_Info_Dropdown_Phone;
     public GameObject[] Card_Info_Warning_Input;
     public Button DU_Button;
-    public Text[] DU_Input_Field;
+    public TMP_InputField[] DU_Input_Field;
     public TMP_Dropdown DU_Phone_Country;
     public GameObject[] DU_Warning_Input;
     public Image[] DU_voucher_spin_prize;
@@ -94,7 +94,7 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Registration_Input_Field[1].horizontalOverflow = HorizontalWrapMode.Wrap;
+
     }
 
     // Update is called once per frame
@@ -330,6 +330,14 @@ public class UIController : MonoBehaviour
                 {
                     Voucher_Script.MinusUpdateData(s);
                     VoucherDistribution_Script.InsertData(phone, Voucher_Script.ChosenVoucher);
+                    /*string given = "given-" + s._type;
+                    int temp_given = PlayerPrefs.GetInt(given, 0);
+                    temp_given += 1;
+                    PlayerPrefs.SetInt(given, temp_given);
+                    string remain = "remaining-" + s._type;
+                    int temp_remain = PlayerPrefs.GetInt(remain, s._stock);
+                    PlayerPrefs.SetInt(remain, s._stock);*/
+                    //to be continue
                     break;
                 }
             }

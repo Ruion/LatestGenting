@@ -12,6 +12,9 @@ public class VoucherDatabase : MonoBehaviour
     public VoucherEntity ChosenVoucherEntity;
     public List<VoucherEntity> myList = new List<VoucherEntity>();
 
+    public VoucherGivenSummary voucher_given_database;
+    public VoucherRemainingSummary voucher_remaining_database;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -81,11 +84,49 @@ public class VoucherDatabase : MonoBehaviour
                     }
                     ResetDailyData(ve);
                 }
+                //given voucher
+                /*int g_v1 = PlayerPrefs.GetInt("given-TheBackeryRM10", 0);
+                int g_v2 = PlayerPrefs.GetInt("given-MedanSeleraRM20", 0);
+                int g_v3 = PlayerPrefs.GetInt("given-FuHuRM50", 0);
+                int g_v4 = PlayerPrefs.GetInt("given-MoltenChocolateBuy1Free2", 0);
+                int g_v5 = PlayerPrefs.GetInt("given-GongChaFree1", 0);
+                int g_v6 = PlayerPrefs.GetInt("given-SanFranciscoFree1", 0);
+                voucher_given_database.InsertData(g_v1, g_v2, g_v3, g_v4, g_v5, g_v6, temp);
+
+                //remaining voucher
+                int r_v1 = PlayerPrefs.GetInt("remaining-TheBackeryRM10", PlayerPrefs.GetInt("TheBackeryRM10", 45));
+                int r_v2 = PlayerPrefs.GetInt("remaining-MedanSeleraRM20", PlayerPrefs.GetInt("MedanSeleraRM20", 12));
+                int r_v3 = PlayerPrefs.GetInt("remaining-FuHuRM50", PlayerPrefs.GetInt("FuHuRM50", 5));
+                int r_v4 = PlayerPrefs.GetInt("remaining-MoltenChocolateBuy1Free2", PlayerPrefs.GetInt("MoltenChocolateBuy1Free2", 50));
+                int r_v5 = PlayerPrefs.GetInt("remaining-GongChaFree1", PlayerPrefs.GetInt("GongChaFree1", 45));
+                int r_v6 = PlayerPrefs.GetInt("remaining-SanFranciscoFree1", PlayerPrefs.GetInt("SanFranciscoFree1", 45));
+                voucher_remaining_database.InsertData(r_v1, r_v2, r_v3, r_v4, r_v5, r_v6, temp);
+
+                //reset playerpref
+                SetPlayerpref();*/
+
                 string todaydate = DateTime.Now.Date.ToString();
                 PlayerPrefs.SetString("TheDate", todaydate);
             }
 
         }
+    }
+
+    public void SetPlayerpref()
+    {
+        PlayerPrefs.SetInt("given-TheBackeryRM10", 0);
+        PlayerPrefs.SetInt("given-MedanSeleraRM20", 0);
+        PlayerPrefs.SetInt("given-FuHuRM50", 0);
+        PlayerPrefs.SetInt("given-MoltenChocolateBuy1Free2", 0);
+        PlayerPrefs.SetInt("given-GongChaFree1", 0);
+        PlayerPrefs.SetInt("given-SanFranciscoFree1", 0);
+
+        PlayerPrefs.SetInt("remaining-TheBackeryRM10", PlayerPrefs.GetInt("TheBackeryRM10", 45));
+        PlayerPrefs.SetInt("remaining-MedanSeleraRM20", PlayerPrefs.GetInt("MedanSeleraRM20", 12));
+        PlayerPrefs.SetInt("remaining-FuHuRM50", PlayerPrefs.GetInt("FuHuRM50", 5));
+        PlayerPrefs.SetInt("remaining-MoltenChocolateBuy1Free2", PlayerPrefs.GetInt("MoltenChocolateBuy1Free2", 50));
+        PlayerPrefs.SetInt("remaining-GongChaFree1", PlayerPrefs.GetInt("GongChaFree1", 45));
+        PlayerPrefs.SetInt("remaining-SanFranciscoFree1", PlayerPrefs.GetInt("SanFranciscoFree1", 45));
     }
 
     public void GetData()
