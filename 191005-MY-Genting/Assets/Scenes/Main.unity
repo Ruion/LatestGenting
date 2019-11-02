@@ -39112,12 +39112,12 @@ PrefabInstance:
     - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
         type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
         type: 3}
@@ -39231,11 +39231,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
         type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1485395321}
-    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
-        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: MoveTextEnd
       objectReference: {fileID: 0}
@@ -39244,11 +39239,6 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
-        type: 3}
-      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1485395321}
     - target: {fileID: 8307763309953543133, guid: 9abd91473bd87094f81318823b58edc4,
         type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName

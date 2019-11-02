@@ -33,35 +33,44 @@ public class KeyboardScript : MonoBehaviour
     public void alphabetFunction(string alphabet)
     {
         clickSound.Play();
-
-        int caretPos = inputFieldTMPro.caretPosition;
-        Debug.Log("caret position before type: " + inputFieldTMPro.caretPosition);
+        bool canType = true;
 
         if (inputFieldTMPro.contentType == TMPro.TMP_InputField.ContentType.IntegerNumber)
         {
             int out_;
-         //   if(int.TryParse(alphabet, out out_)) inputFieldTMPro.text = inputFieldTMPro.text.Insert(inputFieldTMPro.caretPosition, alphabet); //inputFieldTMPro.text = inputFieldTMPro.text + alphabet;
-            if(int.TryParse(alphabet, out out_)) inputFieldTMPro.text += alphabet;
+            if (!int.TryParse(alphabet, out out_)) canType = false;
+          // SAFE if(int.TryParse(alphabet, out out_)) inputFieldTMPro.text += alphabet;
             
-            }
-     //  else inputFieldTMPro.text = inputFieldTMPro.text.Insert(inputFieldTMPro.caretPosition, alphabet); //inputFieldTMPro.text = inputFieldTMPro.text + alphabet;
-       else inputFieldTMPro.text += alphabet;
+        }
 
-        StartCoroutine(MoveToEnd());
+        if (canType) {
+            inputFieldTMPro.text = inputFieldTMPro.text.Insert(inputFieldTMPro.stringPosition, alphabet);
+            Debug.Log("Add letter at " + (inputFieldTMPro.stringPosition));
+            StartCoroutine(MoveToEnd());
+        }
+
+        // SAFE  else inputFieldTMPro.text += alphabet; 
     }
 
     IEnumerator MoveToEnd()
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSecondsRealtime(0.01f);
 
-        inputFieldTMPro.MoveTextEnd(false);
-       inputFieldTMPro.MoveToEndOfLine(false, false);
+        //  inputFieldTMPro.MoveTextEnd(false);
+        // inputFieldTMPro.MoveToEndOfLine(false, false);
+
+        inputFieldTMPro.stringPosition = inputFieldTMPro.text.Length;
     }
 
     public void BackSpace()
     {
         clickSound.Play();
-        if (inputFieldTMPro.text.Length>0) inputFieldTMPro.text= inputFieldTMPro.text.Remove(inputFieldTMPro.text.Length-1);
+       // if (inputFieldTMPro.text.Length>0) inputFieldTMPro.text= inputFieldTMPro.text.Remove(inputFieldTMPro.text.Length-1);
+        if (inputFieldTMPro.text.Length>0) inputFieldTMPro.text= inputFieldTMPro.text.Remove(inputFieldTMPro.stringPosition-1, 1);
+        inputFieldTMPro.stringPosition -= 1;
+
+        Debug.Log("Remove letter at " + (inputFieldTMPro.stringPosition - 1));
+
     }
 
     public void CloseAllLayouts()
