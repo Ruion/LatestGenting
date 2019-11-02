@@ -7,6 +7,9 @@ public class KeyboardScript : MonoBehaviour
 {
 
     public AudioSource clickSound;
+    int selectionStartPost;
+    int selectionEndPost;
+    int selectionAmount;
 
     private void OnEnable()
     {
@@ -44,10 +47,22 @@ public class KeyboardScript : MonoBehaviour
         }
 
         if (canType) {
-            inputFieldTMPro.text = inputFieldTMPro.text.Insert(inputFieldTMPro.stringPosition, alphabet);
-            inputFieldTMPro.stringPosition += alphabet.Length;
-            inputFieldTMPro.Select();
+
+            if (!SelectionFocus())
+            {
+                inputFieldTMPro.text = inputFieldTMPro.text.Insert(inputFieldTMPro.stringPosition, alphabet);
+                inputFieldTMPro.stringPosition += alphabet.Length;
+                
+            }
+            else
+            {
+                RemoveSelectionTexts();
+                inputFieldTMPro.text = inputFieldTMPro.text.Insert(inputFieldTMPro.stringPosition, alphabet);
+                inputFieldTMPro.stringPosition += alphabet.Length;
+            }
         }
+
+        inputFieldTMPro.Select();
 
         // SAFE  else inputFieldTMPro.text += alphabet; 
     }
@@ -55,19 +70,59 @@ public class KeyboardScript : MonoBehaviour
     public void BackSpace()
     {
         clickSound.Play();
+
         // SAFE if (inputFieldTMPro.text.Length>0) inputFieldTMPro.text= inputFieldTMPro.text.Remove(inputFieldTMPro.text.Length-1);
 
         if (inputFieldTMPro.text.Length < 0) return;
 
-        if ( inputFieldTMPro.stringPosition - 1 < 0) return;
-
         int cutPos = inputFieldTMPro.stringPosition - 1;
 
-        inputFieldTMPro.text = inputFieldTMPro.text.Remove(cutPos, 1);
-        inputFieldTMPro.stringPosition = cutPos;
+        if (!SelectionFocus())
+        {
+            if (inputFieldTMPro.stringPosition - 1 < 0) return;
+            inputFieldTMPro.text = inputFieldTMPro.text.Remove(cutPos, 1);
+            inputFieldTMPro.stringPosition = cutPos;
+        }
+        else
+        {
+            RemoveSelectionTexts();
+        }
+
         inputFieldTMPro.Select();
         //  if (inputFieldTMPro.stringPosition <= 0) inputFieldTMPro.MoveTextEnd(false);
 
+    }
+
+    public void ShowSelectionDetails()
+    {
+        SelectionFocus();
+        Debug.Log("selectionStartPost : " + selectionStartPost + " , " + "selectionEndPost : " + selectionEndPost + ", amount : " + selectionAmount);
+    }
+
+    private bool SelectionFocus()
+    {
+        if (inputFieldTMPro.selectionStringAnchorPosition < inputFieldTMPro.selectionStringFocusPosition)
+        {
+            selectionStartPost = inputFieldTMPro.selectionStringAnchorPosition;
+            selectionEndPost = inputFieldTMPro.selectionStringFocusPosition;
+        }
+        else
+        {
+            selectionStartPost = inputFieldTMPro.selectionStringFocusPosition;
+            selectionEndPost = inputFieldTMPro.selectionStringAnchorPosition;
+        }
+
+        selectionAmount = selectionEndPost - selectionStartPost;
+
+        if ((selectionAmount) >= 1) return true;
+
+        return false;
+    }
+
+    private void RemoveSelectionTexts()
+    {
+        inputFieldTMPro.text = inputFieldTMPro.text.Remove(selectionStartPost, selectionAmount);
+        inputFieldTMPro.stringPosition = selectionStartPost;
     }
 
     public void CloseAllLayouts()
