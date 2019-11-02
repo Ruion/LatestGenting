@@ -45,31 +45,28 @@ public class KeyboardScript : MonoBehaviour
 
         if (canType) {
             inputFieldTMPro.text = inputFieldTMPro.text.Insert(inputFieldTMPro.stringPosition, alphabet);
-            Debug.Log("Add letter at " + (inputFieldTMPro.stringPosition));
-            StartCoroutine(MoveToEnd());
+            inputFieldTMPro.stringPosition += alphabet.Length;
+            inputFieldTMPro.Select();
         }
 
         // SAFE  else inputFieldTMPro.text += alphabet; 
     }
 
-    IEnumerator MoveToEnd()
-    {
-        yield return new WaitForSecondsRealtime(0.01f);
-
-        //  inputFieldTMPro.MoveTextEnd(false);
-        // inputFieldTMPro.MoveToEndOfLine(false, false);
-
-        inputFieldTMPro.stringPosition = inputFieldTMPro.text.Length;
-    }
-
     public void BackSpace()
     {
         clickSound.Play();
-       // if (inputFieldTMPro.text.Length>0) inputFieldTMPro.text= inputFieldTMPro.text.Remove(inputFieldTMPro.text.Length-1);
-        if (inputFieldTMPro.text.Length>0) inputFieldTMPro.text= inputFieldTMPro.text.Remove(inputFieldTMPro.stringPosition-1, 1);
-        inputFieldTMPro.stringPosition -= 1;
+        // SAFE if (inputFieldTMPro.text.Length>0) inputFieldTMPro.text= inputFieldTMPro.text.Remove(inputFieldTMPro.text.Length-1);
 
-        Debug.Log("Remove letter at " + (inputFieldTMPro.stringPosition - 1));
+        if (inputFieldTMPro.text.Length < 0) return;
+
+        if ( inputFieldTMPro.stringPosition - 1 < 0) return;
+
+        int cutPos = inputFieldTMPro.stringPosition - 1;
+
+        inputFieldTMPro.text = inputFieldTMPro.text.Remove(cutPos, 1);
+        inputFieldTMPro.stringPosition = cutPos;
+        inputFieldTMPro.Select();
+        //  if (inputFieldTMPro.stringPosition <= 0) inputFieldTMPro.MoveTextEnd(false);
 
     }
 
