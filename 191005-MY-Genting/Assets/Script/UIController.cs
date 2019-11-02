@@ -29,6 +29,7 @@ public class UIController : MonoBehaviour
     public Button Registration_Button;
     public TMP_InputField Registration_Input_Field_Inherit;
     public GameObject[] Registration_Warning_Input;
+    public GameObject Registration_Phone_Duplication_Warning;
     public Image Loading_Card;
     public TMP_InputField[] Card_Info_Input_Field;
     public TMP_InputField[] Card_Info_Input_Field_Parent;
@@ -36,6 +37,7 @@ public class UIController : MonoBehaviour
     public Button Card_Info_DU_Button;
     public TMP_Dropdown Card_Info_Dropdown_Phone;
     public GameObject[] Card_Info_Warning_Input;
+    public GameObject Card_Info_Phone_Duplication_Warning;
     public Button DU_Button;
     public TMP_InputField[] DU_Input_Field;
     public TMP_Dropdown DU_Phone_Country;
@@ -225,15 +227,20 @@ public class UIController : MonoBehaviour
         registration_input1 = true;
         Registration_Warning_Input[0].SetActive(true);
         Registration_Warning_Input[1].SetActive(false);
-        if(Registration_Input_Field[0].text == "")
+        if (Registration_Input_Field[0].text == "")
         {
             registration_input1 = false;
             Registration_Warning_Input[0].SetActive(false);
             Registration_Warning_Input[1].SetActive(true);
         }
+
         if (registration_input1 && registration_input2 && registration_input3)
         {
             Registration_Button.interactable = true;
+        }
+        else
+        {
+            Registration_Button.interactable = false;
         }
     }
 
@@ -255,21 +262,39 @@ public class UIController : MonoBehaviour
         {
             Registration_Button.interactable = true;
         }
+        else
+        {
+            Registration_Button.interactable = false;
+        }
     }
     public void R_setinput3()
     {
         registration_input3 = true;
         Registration_Warning_Input[4].SetActive(true);
         Registration_Warning_Input[5].SetActive(false);
-        if(Registration_Input_Field[2].text == "")
+        Registration_Phone_Duplication_Warning.SetActive(false);
+
+        string tempphone = "+" + GetNumbers(Registration_Phone_Country.options[Registration_Phone_Country.value].text) + Registration_Input_Field[2].text;
+        foreach (UserEntity f in User_Script.myList)
         {
-            registration_input3 = false;
-            Registration_Warning_Input[4].SetActive(false);
-            Registration_Warning_Input[5].SetActive(true);
+            if (Registration_Input_Field[2].text == "" || tempphone == f._phone)
+            {
+                if(tempphone == f._phone)
+                {
+                    Registration_Phone_Duplication_Warning.SetActive(true);
+                }
+                registration_input3 = false;
+                Registration_Warning_Input[4].SetActive(false);
+                Registration_Warning_Input[5].SetActive(true);
+            }
         }
         if (registration_input1 && registration_input2 && registration_input3)
         {
             Registration_Button.interactable = true;
+        }
+        else
+        {
+            Registration_Button.interactable = false;
         }
     }
 
@@ -278,6 +303,13 @@ public class UIController : MonoBehaviour
         CancelInvoke("R_setinput2");
         RegistrationPage.SetActive(false);
         VoucherPage.SetActive(true);
+    }
+
+    public void Registration_CheckPhoneDuplicate()
+    {
+        Debug.Log("Checking Regsitration Phone Duplicate: Get All User Data Stage!!");
+        User_Script.ClearList();
+        User_Script.GetAllData();
     }
     #endregion
 
@@ -465,12 +497,21 @@ public class UIController : MonoBehaviour
         ci_input1 = true;
         Card_Info_Warning_Input[0].SetActive(true);
         Card_Info_Warning_Input[1].SetActive(false);
+        Card_Info_Phone_Duplication_Warning.SetActive(false);
 
-        if(Card_Info_Input_Field[0].text == "")
+        string tempphone = "+" + GetNumbers(Card_Info_Dropdown_Phone.options[Card_Info_Dropdown_Phone.value].text) + Card_Info_Input_Field[0].text;
+        foreach(UserEntity gg in User_Script.myList)
         {
-            ci_input1 = false;
-            Card_Info_Warning_Input[0].SetActive(false);
-            Card_Info_Warning_Input[1].SetActive(true);
+            if (Card_Info_Input_Field[0].text == "" || tempphone == gg._phone)
+            {
+                if(tempphone == gg._phone)
+                {
+                    Card_Info_Phone_Duplication_Warning.SetActive(true);
+                }
+                ci_input1 = false;
+                Card_Info_Warning_Input[0].SetActive(false);
+                Card_Info_Warning_Input[1].SetActive(true);
+            }
         }
 
         if (exist)
@@ -480,13 +521,23 @@ public class UIController : MonoBehaviour
                 Card_Info_Redeem_Button.interactable = true;
                 Card_Info_DU_Button.interactable = true;
             }
+            else
+            {
+                Card_Info_Redeem_Button.interactable = false;
+                Card_Info_DU_Button.interactable = false;
+            }
         }
         else
         {
-            if(ci_input2)
+            if(ci_input1 && ci_input2)
             {
                 Card_Info_Redeem_Button.interactable = true;
                 Card_Info_DU_Button.interactable = true;
+            }
+            else
+            {
+                Card_Info_Redeem_Button.interactable = false;
+                Card_Info_DU_Button.interactable = false;
             }
         }
     }
@@ -510,6 +561,11 @@ public class UIController : MonoBehaviour
                 Card_Info_Redeem_Button.interactable = true;
                 Card_Info_DU_Button.interactable = true;
             }
+            else
+            {
+                Card_Info_Redeem_Button.interactable = false;
+                Card_Info_DU_Button.interactable = false;
+            }
         }
         else
         {
@@ -518,6 +574,11 @@ public class UIController : MonoBehaviour
                 Card_Info_Redeem_Button.interactable = true;
                 Card_Info_DU_Button.interactable = true;
             }
+            else
+            {
+                Card_Info_Redeem_Button.interactable = false;
+                Card_Info_DU_Button.interactable = false;
+            }
         }
     }
 
@@ -525,6 +586,13 @@ public class UIController : MonoBehaviour
     {
         CardInfoPage.SetActive(false);
         VoucherPage.SetActive(true);
+    }
+
+    public void CardInfor_CheckPhoneDuplicate()
+    {
+        Debug.Log("Checking Card Info Phone Duplicate: Get All User Data Stage!!");
+        User_Script.ClearList();
+        User_Script.GetAllData();
     }
     #endregion
 

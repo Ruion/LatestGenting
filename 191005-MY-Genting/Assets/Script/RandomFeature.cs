@@ -10,7 +10,6 @@ public class RandomFeature : MonoBehaviour
     public int temp_total = 0;
     public List<ProbabilityCheck> voucher_probability = new List<ProbabilityCheck>();
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +51,7 @@ public class RandomFeature : MonoBehaviour
     public void CalculateProbability()
     {
         int rand = UnityEngine.Random.Range(0, temp_total);
+        int dd = 0;
         foreach (ProbabilityCheck s in voucher_probability)
         {
             if (rand >= s.min_prob && rand < s.max_prob)
@@ -59,6 +59,11 @@ public class RandomFeature : MonoBehaviour
                 vdb.ChosenVoucher = s.id;
                 Debug.Log("Chosen Voucher is " + s.id + " & type is " + s.type);
             }
+            dd += 1;
+        }
+        if(dd == 0)
+        {
+            vdb.ChosenVoucher = 4;
         }
     }
 

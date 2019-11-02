@@ -18,6 +18,8 @@ public class StockController : MonoBehaviour
 
     public Button Setbtn;
     public Button Savebtn;
+
+    public GameObject nomorevoucher;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,21 @@ public class StockController : MonoBehaviour
         Input_Field_Stock[3].text = PlayerPrefs.GetInt("MoltenChocolateBuy1Free2", 50).ToString();
         Input_Field_Stock[4].text = PlayerPrefs.GetInt("GongChaFree1", 45).ToString();
         Input_Field_Stock[5].text = PlayerPrefs.GetInt("SanFranciscoFree1", 45).ToString();
+
+        /*voucherdatabase.ClearList();
+        voucherdatabase.GetData();
+        int s = 0;
+        foreach(VoucherEntity aa in voucherdatabase.myList)
+        {
+            if(aa._stock <= 0)
+            {
+                s += 1;
+            }
+        }
+        if(s >= 6)
+        {
+            nomorevoucher.SetActive(true);
+        }*/
     }
 
     public void GetStock()
