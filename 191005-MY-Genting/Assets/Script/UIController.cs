@@ -434,6 +434,16 @@ public class UIController : MonoBehaviour
         }
         else
         {
+            if (exist)
+            {
+                phone = "+" + GetNumbers(Card_Info_Dropdown_Phone.options[Card_Info_Dropdown_Phone.value].text) + Card_Info_Input_Field[0].text;
+                email = phone;
+                refercode = Card_Info_Input_Field[1].text;
+                if (refercode == "")
+                {
+                    refercode = "0";
+                }
+            }
             printV1 = Voucher_Script.ChosenVoucher.ToString();
             tempvouchername = printV1;
             Voucher_Script.ClearList();
@@ -547,12 +557,19 @@ public class UIController : MonoBehaviour
         Card_Info_Warning_Input[2].SetActive(true);
         Card_Info_Warning_Input[3].SetActive(false);
 
-        if (Card_Info_Input_Field[2].text == "")
+
+        string temp_card_id = Card_Info_Input_Field[2].text;
+        foreach (UserEntity gg in User_Script.myList)
         {
-            ci_input2 = false;
-            Card_Info_Warning_Input[2].SetActive(false);
-            Card_Info_Warning_Input[3].SetActive(true);
+            if (Card_Info_Input_Field[2].text == "" || temp_card_id == gg._memberid)
+            {
+                ci_input2 = false;
+                Card_Info_Warning_Input[2].SetActive(false);
+                Card_Info_Warning_Input[3].SetActive(true);
+            }
         }
+
+            
 
         if (exist)
         {
