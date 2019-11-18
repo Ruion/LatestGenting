@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using DataBank;
 using System;
+using System.IO;
 using UnityEngine.UI;
 
 public class OnlineDatabase : MonoBehaviour
@@ -16,6 +17,10 @@ public class OnlineDatabase : MonoBehaviour
     public const string userURL = "https://191005-my-genting.unicom-interactive-digital.com/public/api/submit-player-data";
     public const string dupreferURL = "https://191005-my-genting.unicom-interactive-digital.com/public/api/submit-reference-data";
     public const string voucherdistributionURL = "https://191005-my-genting.unicom-interactive-digital.com/public/api/submit-voucher_distribution-data";
+
+    /*public const string userURL = "http://191005-my-genting-test.unicom-interactive-digital.com/public/api/submit-player-data";
+    public const string dupreferURL = "http://191005-my-genting-test.unicom-interactive-digital.com/public/api/submit-reference-data";
+    public const string voucherdistributionURL = "http://191005-my-genting-test.unicom-interactive-digital.com/public/api/submit-voucher_distribution-data";*/
 
     public UserDatabase userdb;
     public DupReferDatabase duprdb;
@@ -34,11 +39,12 @@ public class OnlineDatabase : MonoBehaviour
     int voucherdis_greencount;
     int voucherdis_redcount;
 
+    string TextPath;
+    bool logerror = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        //SyncUserData();
-        //SynchVoucherDistributionData();
         StartCoroutine(CheckInternet());
     }
 
@@ -120,14 +126,18 @@ public class OnlineDatabase : MonoBehaviour
                 if (www.isNetworkError || www.isHttpError)
                 {
                     Debug.Log("User Sync Error : " + www.error);
+                    logerror = true;
                     //break;
+                    Save_Player_Sync_Log(a._name, a._email, a._phone, a._referencecode, a._memberid, a._status, datetime, www.error);
                     user_redcount += 1;
                     redcount_text.text = user_redcount + " | " + duprefer_redcount + " | " + voucherdis_redcount;
                     redbar.SetActive(true);
                 }
                 else
                 {
+                    logerror = false;
                     Debug.Log("User Form upload complete! Response = " + www.downloadHandler.text);
+                    Save_Player_Sync_Log(a._name, a._email, a._phone, a._referencecode, a._memberid, a._status, datetime, www.downloadHandler.text);
                     var serverresponse = JsonUtility.FromJson<serverresponse>(www.downloadHandler.text);
                     string temp_msg = serverresponse.result;
                     if (temp_msg == "Success")
@@ -137,12 +147,21 @@ public class OnlineDatabase : MonoBehaviour
                         user_greencount += 1;
                         greencount_text.text = user_greencount + " | " + duprefer_greencount + " | " + voucherdis_greencount;
                         greenbar.SetActive(true);
-                    }                    
+                    }
+                    else if(temp_msg == "Duplicate")
+                    {
+                        userdb.UpdateDataOnlineDuplicate(a);
+                        Debug.LogWarning("User Data(Duplicate) has been successfully Updated!!");
+                        user_greencount += 1;
+                        greencount_text.text = user_greencount + " | " + duprefer_greencount + " | " + voucherdis_greencount;
+                        greenbar.SetActive(true);
+                    }
                 }
             }
+            yield return new WaitForSeconds(1.2f);
         }
         SyncDupReferData();
-        SynchVoucherDistributionData();
+        
     }
 
     #endregion
@@ -170,6 +189,7 @@ public class OnlineDatabase : MonoBehaviour
             form.AddField("referral_name", s._name);
             form.AddField("referral_email", s._email);
             form.AddField("referral_contact", s._phone);
+            form.AddField("created_at", s._dateCreated);
             Debug.LogError("Double Up Reference Data : " + s._userphone + " | " + s._name + " | " + s._email + " | " + s._phone);
            // newURL = UnityWebRequest.EscapeURL(newURL);
             //using (UnityWebRequest www = UnityWebRequest.Get(newURL))
@@ -180,6 +200,8 @@ public class OnlineDatabase : MonoBehaviour
                 if (www.isNetworkError || www.isHttpError)
                 {
                     Debug.Log("DoubleUp Reference Sync Error : " + www.error);
+                    logerror = true;
+                    Save_Reference_Sync_Log(s._userphone, s._name, s._email, s._phone, s._dateCreated, www.error);
                     //break;.
                     duprefer_redcount += 1;
                     redcount_text.text = user_redcount + " | " + duprefer_redcount + " | " + voucherdis_redcount;
@@ -187,7 +209,9 @@ public class OnlineDatabase : MonoBehaviour
                 }
                 else
                 {
+                    logerror = false;
                     Debug.Log("DoubleUp Reference Form upload complete! Response = " + www.downloadHandler.text);
+                    Save_Reference_Sync_Log(s._userphone, s._name, s._email, s._phone, s._dateCreated, www.downloadHandler.text);
                     var serverresponse = JsonUtility.FromJson<serverresponse>(www.downloadHandler.text);
                     string temp_msg = serverresponse.result;
                     if (temp_msg == "Success")
@@ -200,7 +224,9 @@ public class OnlineDatabase : MonoBehaviour
                     }
                 }
             }
+            yield return new WaitForSeconds(1.2f);
         }
+        SynchVoucherDistributionData();
     }
     #endregion
 
@@ -233,6 +259,7 @@ public class OnlineDatabase : MonoBehaviour
             WWWForm form = new WWWForm();
             form.AddField("player_contact", d._userPhone);
             form.AddField("voucher_code", vouchername);
+            form.AddField("created_at", d._dateCreated);
             Debug.LogError("Voucher Distribution Data : " + d._userPhone + " | " + vouchername);
             //newURL = UnityWebRequest.EscapeURL(newURL);
             //using (UnityWebRequest www = UnityWebRequest.Get(newURL))
@@ -243,6 +270,8 @@ public class OnlineDatabase : MonoBehaviour
                 if (www.isNetworkError || www.isHttpError)
                 {
                     Debug.Log("Voucher Distribution Sync Error : " + www.error);
+                    logerror = true;
+                    Save_Voucher_Distribution_Sync_Log(d._userPhone, vouchername, d._dateCreated, www.error);
                     //break;
                     voucherdis_redcount += 1;
                     redcount_text.text = user_redcount + " | " + duprefer_redcount + " | " + voucherdis_redcount;
@@ -250,7 +279,9 @@ public class OnlineDatabase : MonoBehaviour
                 }
                 else
                 {
+                    logerror = false;
                     Debug.Log("User Form upload complete! Response = " + www.downloadHandler.text);
+                    Save_Voucher_Distribution_Sync_Log(d._userPhone, vouchername, d._dateCreated, www.downloadHandler.text);
                     var serverresponse = JsonUtility.FromJson<serverresponse>(www.downloadHandler.text);
                     string temp_msg = serverresponse.result;
                     if (temp_msg == "Success")
@@ -263,11 +294,75 @@ public class OnlineDatabase : MonoBehaviour
                     }
                 }
             }
+            yield return new WaitForSeconds(1.2f);
         }
         greenbar.GetComponent<StatusBar>().Finish();
         redbar.GetComponent<StatusBar>().Finish();
     }
     #endregion
+
+
+    public void Save_Player_Sync_Log(string name, string email, string phone, string referencecode, string memberid, string status, string datetime, string errorlog)
+    {
+        TextPath = Application.dataPath + "/Player_Sync_Log.txt";
+        string linetext = "";
+        if (!File.Exists(TextPath))
+        {
+            File.WriteAllText(TextPath, "");
+        }
+        if(logerror)
+        {
+            linetext = "ERROR | " + DateTime.Now.ToString() + " | " + errorlog + " | Name: " + name + " | Email: " + email + " | Contact: " + phone + " | Reference Code: " + referencecode + " | MemberCard: " + memberid + " | IsNewPlayer: " + status + " | Register Date: " + datetime + "\n";
+        }
+        else
+        {
+            linetext = DateTime.Now.ToString() + " | " + errorlog + " | Name: " + name + " | Email: " + email + " | Contact: " + phone + " | Reference Code: " + referencecode + " | MemberCard: " + memberid + " | IsNewPlayer: " + status + " | Register Date: " + datetime + "\n";
+        }
+        StreamWriter writer = new StreamWriter(TextPath, true);
+        writer.Write(linetext);
+        writer.Close();
+    }
+    public void Save_Reference_Sync_Log(string player_phone, string refername, string referemail, string referphone, string datecreate, string errorlog)
+    {
+        TextPath = Application.dataPath + "/Reference_Sync_Log.txt";
+        string linetext = "";
+        if (!File.Exists(TextPath))
+        {
+            File.WriteAllText(TextPath, "");
+        }
+        if (logerror)
+        {
+            linetext = "ERROR | " + DateTime.Now.ToString() + " | " + errorlog + " | Referral_Phone: " + player_phone + " | Referer_Name: " + refername + " | Referer_Email: " + referemail + " | Referer_Contact: " + referphone + " | DateCreated: " + datecreate + "\n";
+        }
+        else
+        {
+            linetext = DateTime.Now.ToString() + " | " + errorlog + " | Referral_Phone: " + player_phone + " | Referer_Name: " + refername + " | Referer_Email: " + referemail + " | Referer_Contact: " + referphone + " | DateCreated: " + datecreate + "\n";
+        }
+        StreamWriter writer = new StreamWriter(TextPath, true);
+        writer.Write(linetext);
+        writer.Close();
+    }
+    public void Save_Voucher_Distribution_Sync_Log(string player_phone, string vouchername, string datecreate, string errorlog)
+    {
+        TextPath = Application.dataPath + "/Voucher_Distribution_Sync_Log.txt";
+        string linetext = "";
+        if (!File.Exists(TextPath))
+        {
+            File.WriteAllText(TextPath, "");
+        }
+        if (logerror)
+        {
+            linetext = "ERROR | " + DateTime.Now.ToString() + " | " + errorlog + " | Player_Contact: " + player_phone + " | Voucher_Name: " + vouchername + " | DateCreated: " + datecreate + "\n";
+        }
+        else
+        {
+            linetext = DateTime.Now.ToString() + " | " + errorlog + " | Player_Contact: " + player_phone + " | Voucher_Name: " + vouchername + " | DateCreated: " + datecreate + "\n";
+        }
+        StreamWriter writer = new StreamWriter(TextPath, true);
+        writer.Write(linetext);
+        writer.Close();
+    }
+
 
     [System.Serializable]
     public class serverresponse

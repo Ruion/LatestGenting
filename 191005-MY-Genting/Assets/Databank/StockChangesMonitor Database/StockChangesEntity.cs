@@ -15,10 +15,12 @@ namespace DataBank
         public int _voucher4;
         public int _voucher5;
         public int _voucher6;
+        public int _voucher7;
+        public int _voucher8;
         public string _dateCreated; // Auto generated timestamp
 
         //INSERT Data
-        public StockChangesEntity(int voucher1, int voucher2, int voucher3, int voucher4, int voucher5, int voucher6, string datetime)
+        public StockChangesEntity(int voucher1, int voucher2, int voucher3, int voucher4, int voucher5, int voucher6, int voucher7, int voucher8, string datetime)
         {
             _voucher1 = voucher1;
             _voucher2 = voucher2;
@@ -26,11 +28,13 @@ namespace DataBank
             _voucher4 = voucher4;
             _voucher5 = voucher5;
             _voucher6 = voucher6;
+            _voucher7 = voucher7;
+            _voucher8 = voucher8;
             _dateCreated = datetime;
         }
 
         //GET Data
-        public StockChangesEntity(int id, int voucher1, int voucher2, int voucher3, int voucher4, int voucher5, int voucher6, string dateCreated)
+        public StockChangesEntity(int id, int voucher1, int voucher2, int voucher3, int voucher4, int voucher5, int voucher6, int voucher7, int voucher8, string dateCreated)
         {
             _id = id;
             _voucher1 = voucher1;
@@ -39,6 +43,8 @@ namespace DataBank
             _voucher4 = voucher4;
             _voucher5 = voucher5;
             _voucher6 = voucher6;
+            _voucher7 = voucher7;
+            _voucher8 = voucher8;
             _dateCreated = dateCreated;
         }
     }

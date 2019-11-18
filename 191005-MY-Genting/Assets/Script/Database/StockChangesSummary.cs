@@ -22,10 +22,10 @@ public class StockChangesSummary : MonoBehaviour
         
     }
 
-    public void InsertData(int voucher1, int voucher2, int voucher3, int voucher4, int voucher5, int voucher6, string datetime)
+    public void InsertData(int voucher1, int voucher2, int voucher3, int voucher4, int voucher5, int voucher6, int voucher7, int voucher8, string datetime)
     {
         StockChangesDb mLocationDb = new StockChangesDb();
-        mLocationDb.addData(new StockChangesEntity(voucher1, voucher2, voucher3, voucher4, voucher5, voucher6, datetime));
+        mLocationDb.addData(new StockChangesEntity(voucher1, voucher2, voucher3, voucher4, voucher5, voucher6, voucher7, voucher8, datetime));
         mLocationDb.close();
     }
 

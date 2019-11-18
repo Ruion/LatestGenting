@@ -73,7 +73,7 @@ namespace DataBank
                 "UPDATE " + TABLE_NAME
                 + " SET "
                 + KEY_STATUSONLINE + " = '"
-                + "submitted" + "' "
+                + user._onlinestatus + "' "
                 + "WHERE "
                 + KEY_ID + " = '"
                 + user._id.ToString() + "'";

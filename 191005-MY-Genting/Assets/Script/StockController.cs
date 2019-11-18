@@ -29,6 +29,8 @@ public class StockController : MonoBehaviour
         Input_Field_Stock[3].text = PlayerPrefs.GetInt("MoltenChocolateBuy1Free2", 50).ToString();
         Input_Field_Stock[4].text = PlayerPrefs.GetInt("GongChaFree1", 45).ToString();
         Input_Field_Stock[5].text = PlayerPrefs.GetInt("SanFranciscoFree1", 45).ToString();
+        Input_Field_Stock[6].text = PlayerPrefs.GetInt("Evian", 60).ToString();
+        Input_Field_Stock[7].text = PlayerPrefs.GetInt("XingFuTang", 200).ToString();
 
         /*voucherdatabase.ClearList();
         voucherdatabase.GetData();
@@ -54,6 +56,8 @@ public class StockController : MonoBehaviour
         Input_Field_Stock[3].text = PlayerPrefs.GetInt("MoltenChocolateBuy1Free2", 50).ToString();
         Input_Field_Stock[4].text = PlayerPrefs.GetInt("GongChaFree1", 45).ToString();
         Input_Field_Stock[5].text = PlayerPrefs.GetInt("SanFranciscoFree1", 45).ToString();
+        Input_Field_Stock[6].text = PlayerPrefs.GetInt("Evian", 60).ToString();
+        Input_Field_Stock[7].text = PlayerPrefs.GetInt("XingFuTang", 200).ToString();
     }
 
     // Update is called once per frame
@@ -70,8 +74,9 @@ public class StockController : MonoBehaviour
         PlayerPrefs.SetInt("given-MoltenChocolateBuy1Free2", 0);
         PlayerPrefs.SetInt("given-GongChaFree1", 0);
         PlayerPrefs.SetInt("given-SanFranciscoFree1", 0);
+        PlayerPrefs.SetInt("given-Evian", 0);
+        PlayerPrefs.SetInt("given-XingFuTang", 0);
 
-        Debug.LogError("Player given summary : " + PlayerPrefs.GetInt("given-TheBackeryRM10") + " | " + PlayerPrefs.GetInt("remaining-MedanSeleraRM20") + " | " + PlayerPrefs.GetInt("given-FuHuRM50") + " | " + PlayerPrefs.GetInt("given-MoltenChocolateBuy1Free2") + " | " + PlayerPrefs.GetInt("given-GongChaFree1") + " | " + PlayerPrefs.GetInt("given-SanFranciscoFree1"));
 
         PlayerPrefs.SetInt("remaining-TheBackeryRM10", PlayerPrefs.GetInt("TheBackeryRM10", 45));
         PlayerPrefs.SetInt("remaining-MedanSeleraRM20", PlayerPrefs.GetInt("MedanSeleraRM20", 12));
@@ -79,6 +84,8 @@ public class StockController : MonoBehaviour
         PlayerPrefs.SetInt("remaining-MoltenChocolateBuy1Free2", PlayerPrefs.GetInt("MoltenChocolateBuy1Free2", 50));
         PlayerPrefs.SetInt("remaining-GongChaFree1", PlayerPrefs.GetInt("GongChaFree1", 45));
         PlayerPrefs.SetInt("remaining-SanFranciscoFree1", PlayerPrefs.GetInt("SanFranciscoFree1", 45));
+        PlayerPrefs.SetInt("remaining-Evian", PlayerPrefs.GetInt("Evian", 60));
+        PlayerPrefs.SetInt("remaining-XingFuTang", PlayerPrefs.GetInt("XingFuTang", 200));
     }
     public void SetStock()
     {
@@ -90,7 +97,9 @@ public class StockController : MonoBehaviour
         int g_v4 = PlayerPrefs.GetInt("given-MoltenChocolateBuy1Free2", 0);
         int g_v5 = PlayerPrefs.GetInt("given-GongChaFree1", 0);
         int g_v6 = PlayerPrefs.GetInt("given-SanFranciscoFree1", 0);
-        voucher_given_database.InsertData(g_v1, g_v2, g_v3, g_v4, g_v5, g_v6, temp);
+        int g_v7 = PlayerPrefs.GetInt("given-Evian", 0);
+        int g_v8 = PlayerPrefs.GetInt("given-XingFuTang", 0);
+        voucher_given_database.InsertData(g_v1, g_v2, g_v3, g_v4, g_v5, g_v6, g_v7, g_v8, temp);
 
         //remaining voucher
         int r_v1 = PlayerPrefs.GetInt("remaining-TheBackeryRM10", PlayerPrefs.GetInt("TheBackeryRM10", 45));
@@ -99,7 +108,9 @@ public class StockController : MonoBehaviour
         int r_v4 = PlayerPrefs.GetInt("remaining-MoltenChocolateBuy1Free2", PlayerPrefs.GetInt("MoltenChocolateBuy1Free2", 50));
         int r_v5 = PlayerPrefs.GetInt("remaining-GongChaFree1", PlayerPrefs.GetInt("GongChaFree1", 45));
         int r_v6 = PlayerPrefs.GetInt("remaining-SanFranciscoFree1", PlayerPrefs.GetInt("SanFranciscoFree1", 45));
-        voucher_remaining_database.InsertData(r_v1, r_v2, r_v3, r_v4, r_v5, r_v6, temp);
+        int r_v7 = PlayerPrefs.GetInt("remaining-Evian", PlayerPrefs.GetInt("Evian", 60));
+        int r_v8 = PlayerPrefs.GetInt("remaining-XingFuTang", PlayerPrefs.GetInt("XingFuTang", 200));
+        voucher_remaining_database.InsertData(r_v1, r_v2, r_v3, r_v4, r_v5, r_v6, r_v7, r_v8, temp);
 
         SetPlayerPref();
 
@@ -110,9 +121,11 @@ public class StockController : MonoBehaviour
         PlayerPrefs.SetInt("MoltenChocolateBuy1Free2", int.Parse(Input_Field_Stock[3].text));
         PlayerPrefs.SetInt("GongChaFree1", int.Parse(Input_Field_Stock[4].text));
         PlayerPrefs.SetInt("SanFranciscoFree1", int.Parse(Input_Field_Stock[5].text));
+        PlayerPrefs.SetInt("Evian", int.Parse(Input_Field_Stock[6].text));
+        PlayerPrefs.SetInt("XingFuTang", int.Parse(Input_Field_Stock[7].text));
 
         //Stock monitor database
-        stockmonitor.InsertData(int.Parse(Input_Field_Stock[0].text), int.Parse(Input_Field_Stock[1].text), int.Parse(Input_Field_Stock[2].text), int.Parse(Input_Field_Stock[3].text), int.Parse(Input_Field_Stock[4].text), int.Parse(Input_Field_Stock[5].text), temp);
+        stockmonitor.InsertData(int.Parse(Input_Field_Stock[0].text), int.Parse(Input_Field_Stock[1].text), int.Parse(Input_Field_Stock[2].text), int.Parse(Input_Field_Stock[3].text), int.Parse(Input_Field_Stock[4].text), int.Parse(Input_Field_Stock[5].text), int.Parse(Input_Field_Stock[6].text), int.Parse(Input_Field_Stock[7].text), temp);
     }
     public void SaveStock()
     {
@@ -144,6 +157,14 @@ public class StockController : MonoBehaviour
             {
                 s._stock = int.Parse(Input_Field_Stock[5].text);
             }
+            else if (s._id == 7)
+            {
+                s._stock = int.Parse(Input_Field_Stock[6].text);
+            }
+            else if (s._id == 8)
+            {
+                s._stock = int.Parse(Input_Field_Stock[7].text);
+            }
             myList.Add(s);
         }
         foreach (VoucherEntity a in myList)
@@ -154,7 +175,7 @@ public class StockController : MonoBehaviour
 
     public void CheckEmptyInput()
     {
-        if(Input_Field_Stock[0].text != "" && Input_Field_Stock[1].text != "" && Input_Field_Stock[2].text != "" && Input_Field_Stock[3].text != "" && Input_Field_Stock[4].text != "" && Input_Field_Stock[5].text != "")
+        if(Input_Field_Stock[0].text != "" && Input_Field_Stock[1].text != "" && Input_Field_Stock[2].text != "" && Input_Field_Stock[3].text != "" && Input_Field_Stock[4].text != "" && Input_Field_Stock[5].text != "" && Input_Field_Stock[6].text != "" && Input_Field_Stock[7].text != "")
         {
             Setbtn.interactable = true;
             Savebtn.interactable = true;

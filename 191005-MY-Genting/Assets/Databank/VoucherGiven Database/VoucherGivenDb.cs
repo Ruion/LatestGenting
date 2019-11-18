@@ -19,8 +19,10 @@ namespace DataBank
         private const String KEY_VOUCHER4 = "MoltenChocolateBuy1Free2";
         private const String KEY_VOUCHER5 = "GongChaFree1";
         private const String KEY_VOUCHER6 = "SanFranciscoFree1";
+        private const String KEY_VOUCHER7 = "Evian";
+        private const String KEY_VOUCHER8 = "XingFuTang";
         private const String KEY_DATE = "date";
-        private String[] COLUMNS = new String[] { KEY_ID, KEY_VOUCHER1, KEY_VOUCHER2, KEY_VOUCHER3, KEY_VOUCHER4, KEY_VOUCHER5, KEY_VOUCHER6, KEY_DATE };
+        private String[] COLUMNS = new String[] { KEY_ID, KEY_VOUCHER1, KEY_VOUCHER2, KEY_VOUCHER3, KEY_VOUCHER4, KEY_VOUCHER5, KEY_VOUCHER6, KEY_VOUCHER7, KEY_VOUCHER8, KEY_DATE };
 
         public VoucherGivenDb() : base()
         {
@@ -33,6 +35,8 @@ namespace DataBank
                 KEY_VOUCHER4 + " INTEGER, " +
                 KEY_VOUCHER5 + " INTEGER, " +
                 KEY_VOUCHER6 + " INTEGER, " +
+                KEY_VOUCHER7 + " INTEGER, " +
+                KEY_VOUCHER8 + " INTEGER, " +
                 KEY_DATE + " TEXT )";
             dbcmd.ExecuteNonQuery();
         }
@@ -49,6 +53,8 @@ namespace DataBank
                 + KEY_VOUCHER4 + ", "
                 + KEY_VOUCHER5 + ", "
                 + KEY_VOUCHER6 + ", "
+                + KEY_VOUCHER7 + ", "
+                + KEY_VOUCHER8 + ", "
                 + KEY_DATE + " ) "
 
                 + "VALUES ( '"
@@ -58,6 +64,8 @@ namespace DataBank
                 + location._voucher4 + "', '"
                 + location._voucher5 + "', '"
                 + location._voucher6 + "', '"
+                + location._voucher7 + "', '"
+                + location._voucher8 + "', '"
                 + location._dateCreated + "' )";
             dbcmd.ExecuteNonQuery();
         }

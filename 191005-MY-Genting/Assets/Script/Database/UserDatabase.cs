@@ -38,6 +38,14 @@ public class UserDatabase : MonoBehaviour
         mLocationDb2.close();
     }
 
+    public void UpdateDataOnlineDuplicate(UserEntity i)
+    {
+        i._onlinestatus = "Duplicate";
+        UserDb mLocationDb2 = new UserDb();
+        mLocationDb2.updateData(i);
+        mLocationDb2.close();
+    }
+
     public void GetDataByOnlineStatus()
     {
         UserDb mLocationDb3 = new UserDb();

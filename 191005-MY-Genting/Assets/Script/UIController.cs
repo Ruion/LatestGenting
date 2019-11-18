@@ -19,6 +19,7 @@ public class UIController : MonoBehaviour
     public DupReferDatabase DoubleUpRefer_Script;
     public RandomFeature Random_Script;
     public PrintController Print_Script;
+    public CardDispense CardDispense_Script;
 
     [Header("Variable")]
     public GameObject Spin_Object;
@@ -31,6 +32,7 @@ public class UIController : MonoBehaviour
     public GameObject[] Registration_Warning_Input;
     public GameObject Registration_Phone_Duplication_Warning;
     public Image Loading_Card;
+    public Button Card_Info_BackButton;
     public TMP_InputField[] Card_Info_Input_Field;
     public TMP_InputField[] Card_Info_Input_Field_Parent;
     public Button Card_Info_Redeem_Button;
@@ -38,6 +40,7 @@ public class UIController : MonoBehaviour
     public TMP_Dropdown Card_Info_Dropdown_Phone;
     public GameObject[] Card_Info_Warning_Input;
     public GameObject Card_Info_Phone_Duplication_Warning;
+    public GameObject Card_Info_CardMember_Duplication_Warning;
     public Button DU_Button;
     public TMP_InputField[] DU_Input_Field;
     public TMP_Dropdown DU_Phone_Country;
@@ -92,23 +95,49 @@ public class UIController : MonoBehaviour
     bool ci_input2 = false;
 
     bool doubleupBack = false;
+    bool cardinfoBack = false;
+    bool getcard = false;
+
+    bool Countdown = false;
+    bool sec_Countdown = false;
+    float initTime = 30f;
+    float time = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        time = initTime;
     }
 
     // Update is called once per frame
     void Update()
     {
         /*Vector2 abc = Spin_Object.transform.position;
-        Debug.Log(abc);*/
+        Debug.LogError(abc);*/
+        if (Countdown)
+        {
+            time -= Time.deltaTime;
+            if (time <= 0)
+            {
+                SceneManager.LoadScene("Main");
+            }
+        }
+        if (Input.touchCount > 0 || Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
+        {
+            time = initTime;
+        }
     }
+
+    public void Startcount()
+    {
+        Countdown = true;
+    }
+
 
     #region Spin Page Button
     public void SpinButton()
     {
+        time = initTime;
         Random_Script.MakeRandomProbability();
         Random_Script.CalculateProbability();
         StartCoroutine(SpinWheel());
@@ -121,42 +150,50 @@ public class UIController : MonoBehaviour
 
     IEnumerator SpinWheel()
     {
-        int counter = 18;
+        int counter = 24;
         float TimeWait = 0.01f;
         int countmulti = 0;
         if (Voucher_Script.ChosenVoucher == 1)
         {
-            countmulti = 4;
+            countmulti = 3; //1
         }
         else if(Voucher_Script.ChosenVoucher == 2)
         {
-            countmulti = 14;
+            countmulti = 13; //4
         }
         else if (Voucher_Script.ChosenVoucher == 3)
         {
-            countmulti = 8;
+            countmulti = 7; //2
         }
         else if (Voucher_Script.ChosenVoucher == 4)
         {
-            countmulti = 17;
+            countmulti = 16; //5
         }
         else if (Voucher_Script.ChosenVoucher == 5)
         {
-            countmulti = 11;
+            countmulti = 10; //3
         }
         else if (Voucher_Script.ChosenVoucher == 6)
         {
-            countmulti = 20;
+            countmulti = 19; //6
+        }
+        else if (Voucher_Script.ChosenVoucher == 7)
+        {
+            countmulti = 22; //7
+        }
+        else if (Voucher_Script.ChosenVoucher == 8)
+        {
+            countmulti = 25; //8
         }
         counter *= 5;
         counter += countmulti;
-        int slowdown = counter - 18;
+        int slowdown = counter - 24;
         Debug.Log(counter);
         for(int i = 0; i < counter; i++)
         {
-            if(Spin_Object.transform.position.y >= 2697.2f)
+            if(Spin_Object.transform.position.y >= 3298.5f)
             {
-                Spin_Object.transform.position = new Vector2(Spin_Object.transform.position.x, -938.8f);
+                Spin_Object.transform.position = new Vector2(Spin_Object.transform.position.x, -1549.5f);
             }
 
             Spin_Object.transform.position = new Vector2(Spin_Object.transform.position.x, Spin_Object.transform.position.y + 202);
@@ -177,6 +214,7 @@ public class UIController : MonoBehaviour
     #region Spin Prize Page Button
     public void SpinPrizeButton()
     {
+        time = initTime;
         SpinPrizePage.SetActive(false);
         VoucherPage.SetActive(true);
     }
@@ -185,6 +223,7 @@ public class UIController : MonoBehaviour
     #region Voucher Page Button
     public void VoucherButton1_NewMember()
     {
+        time = initTime;
         VoucherPage.SetActive(false);
         RegistrationPage.SetActive(true);
         exist = false;
@@ -192,6 +231,7 @@ public class UIController : MonoBehaviour
     }
     public void VoucherButton2_ExistingMember()
     {
+        time = initTime;
         status = "0";
         exist = true;
         VoucherPage.SetActive(false);
@@ -202,6 +242,7 @@ public class UIController : MonoBehaviour
     #region Registration Page Button
     public void RegistrationButton()
     {
+        time = initTime;
         user_name = Registration_Input_Field[0].text;
         email = Registration_Input_Field[1].text;
         phone = "+" + GetNumbers(Registration_Phone_Country.options[Registration_Phone_Country.value].text) + Registration_Input_Field[2].text;
@@ -214,9 +255,17 @@ public class UIController : MonoBehaviour
         Debug.Log(user_name + "\t" + email + "\t" + phone + "\t" + refercode);
         CancelInvoke("R_setinput2");
         RegistrationPage.SetActive(false);
-        //LoadingCardPage.SetActive(true);
-        RedeemCardPage.SetActive(true);
-        startLoading();
+        
+        if(getcard)
+        {
+            CardInfoPage.SetActive(true);
+        }
+        else
+        {
+            LoadingCardPage.SetActive(true);
+            startLoading();
+        }
+        
     }
     private static string GetNumbers(string input)
     {
@@ -277,16 +326,19 @@ public class UIController : MonoBehaviour
         string tempphone = "+" + GetNumbers(Registration_Phone_Country.options[Registration_Phone_Country.value].text) + Registration_Input_Field[2].text;
         foreach (UserEntity f in User_Script.myList)
         {
-            if (Registration_Input_Field[2].text == "" || tempphone == f._phone)
+            if (tempphone == f._phone)
             {
-                if(tempphone == f._phone)
-                {
-                    Registration_Phone_Duplication_Warning.SetActive(true);
-                }
+                Registration_Phone_Duplication_Warning.SetActive(true);
                 registration_input3 = false;
                 Registration_Warning_Input[4].SetActive(false);
                 Registration_Warning_Input[5].SetActive(true);
             }
+        }
+        if(Registration_Input_Field[2].text == "" || Registration_Input_Field[2].text.Length <= 6)
+        {
+            registration_input3 = false;
+            Registration_Warning_Input[4].SetActive(false);
+            Registration_Warning_Input[5].SetActive(true);
         }
         if (registration_input1 && registration_input2 && registration_input3)
         {
@@ -300,6 +352,7 @@ public class UIController : MonoBehaviour
 
     public void BackBtnRegister()
     {
+        time = initTime;
         CancelInvoke("R_setinput2");
         RegistrationPage.SetActive(false);
         VoucherPage.SetActive(true);
@@ -316,6 +369,7 @@ public class UIController : MonoBehaviour
     #region Loading Card Page
     public void startLoading()
     {
+        time = initTime;
         StartCoroutine(LoadingisStart());
     }
     IEnumerator LoadingisStart()
@@ -324,8 +378,11 @@ public class UIController : MonoBehaviour
         for(float i = 0f; i < 1; i+=0.2f)
         {
             Loading_Card.fillAmount += 0.2f;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(0.5f);
         }
+        CardDispense_Script.DispenseCard();
+        getcard = true;
+        Card_Info_BackButton.gameObject.SetActive(false);
         yield return new WaitForSeconds(1);
         LoadingCardPage.SetActive(false);
         RedeemCardPage.SetActive(true);
@@ -335,6 +392,7 @@ public class UIController : MonoBehaviour
     #region Redeem Card Page Button
     public void RedeemCardButton()
     {
+        time = initTime;
         Card_Info_Input_Field_Parent[0].text = Registration_Input_Field_Inherit.text;
         Card_Info_Input_Field_Parent[1].text = refercode;
         if(refercode == "0")
@@ -349,8 +407,10 @@ public class UIController : MonoBehaviour
     #region Card Info Page Button
     public void CardInfoButton1_Redeem()
     {
-        if(doubleupBack)
+        time = initTime;
+        if (doubleupBack)
         {
+            User_Script.InsertData(user_name, phone, email, status, memberid, refercode);
             CardInfoPage.SetActive(false);
             PrintVoucherPage.SetActive(true);
             PrintVoucherPageFunction();
@@ -414,6 +474,14 @@ public class UIController : MonoBehaviour
                     {
                         defaultremain = 45;
                     }
+                    else if (s._id == 7)
+                    {
+                        defaultremain = 60;
+                    }
+                    else if (s._id == 8)
+                    {
+                        defaultremain = 200;
+                    }
                     string remain = "remaining-" + s._type;
                     int temp_remain = PlayerPrefs.GetInt(remain, defaultremain);
                     temp_remain -= 1;
@@ -427,10 +495,11 @@ public class UIController : MonoBehaviour
     }
     public void CardInfoButton2_DoubleUp()
     {
+        time = initTime;
         if (doubleupBack)
         {
             CardInfoPage.SetActive(false);
-            PrintVoucherPage.SetActive(true);
+            DoubleUpPage.SetActive(true);
         }
         else
         {
@@ -487,6 +556,14 @@ public class UIController : MonoBehaviour
                     {
                         defaultremain = 45;
                     }
+                    else if (s._id == 7)
+                    {
+                        defaultremain = 60;
+                    }
+                    else if (s._id == 8)
+                    {
+                        defaultremain = 200;
+                    }
                     string remain = "remaining-" + s._type;
                     int temp_remain = PlayerPrefs.GetInt(remain, defaultremain);
                     temp_remain -= 1;
@@ -495,7 +572,6 @@ public class UIController : MonoBehaviour
                 }
             }
             memberid = Card_Info_Input_Field[2].text;
-            User_Script.InsertData(user_name, phone, email, status, memberid, refercode);
             InvokeRepeating("DU_setInput2", 1, 1);
             CardInfoPage.SetActive(false);
             DoubleUpPage.SetActive(true);
@@ -512,16 +588,19 @@ public class UIController : MonoBehaviour
         string tempphone = "+" + GetNumbers(Card_Info_Dropdown_Phone.options[Card_Info_Dropdown_Phone.value].text) + Card_Info_Input_Field[0].text;
         foreach(UserEntity gg in User_Script.myList)
         {
-            if (Card_Info_Input_Field[0].text == "" || tempphone == gg._phone)
+            if (tempphone == gg._phone)
             {
-                if(tempphone == gg._phone)
-                {
-                    Card_Info_Phone_Duplication_Warning.SetActive(true);
-                }
+                Card_Info_Phone_Duplication_Warning.SetActive(true);
                 ci_input1 = false;
                 Card_Info_Warning_Input[0].SetActive(false);
                 Card_Info_Warning_Input[1].SetActive(true);
             }
+        }
+        if(Card_Info_Input_Field[0].text == "" || Card_Info_Input_Field[0].text.Length <= 6)
+        {
+            ci_input1 = false;
+            Card_Info_Warning_Input[0].SetActive(false);
+            Card_Info_Warning_Input[1].SetActive(true);
         }
 
         if (exist)
@@ -556,20 +635,26 @@ public class UIController : MonoBehaviour
         ci_input2 = true;
         Card_Info_Warning_Input[2].SetActive(true);
         Card_Info_Warning_Input[3].SetActive(false);
-
+        Card_Info_CardMember_Duplication_Warning.SetActive(false);
 
         string temp_card_id = Card_Info_Input_Field[2].text;
         foreach (UserEntity gg in User_Script.myList)
         {
-            if (Card_Info_Input_Field[2].text == "" || temp_card_id == gg._memberid)
+            if (temp_card_id == gg._memberid)
             {
+                Card_Info_CardMember_Duplication_Warning.SetActive(true);
                 ci_input2 = false;
                 Card_Info_Warning_Input[2].SetActive(false);
                 Card_Info_Warning_Input[3].SetActive(true);
             }
         }
 
-            
+        if(Card_Info_Input_Field[2].text == "" || Card_Info_Input_Field[2].text.Length <= 7)
+        {
+            ci_input2 = false;
+            Card_Info_Warning_Input[2].SetActive(false);
+            Card_Info_Warning_Input[3].SetActive(true);
+        }
 
         if (exist)
         {
@@ -601,6 +686,8 @@ public class UIController : MonoBehaviour
 
     public void BackBtnCardInfo()
     {
+        time = initTime;
+        cardinfoBack = true;
         CardInfoPage.SetActive(false);
         VoucherPage.SetActive(true);
     }
@@ -616,6 +703,8 @@ public class UIController : MonoBehaviour
     #region Double Up Page Button
     public void DUButton()
     {
+        time = initTime;
+        User_Script.InsertData(user_name, phone, email, status, memberid, refercode);
         du_name = DU_Input_Field[0].text;
         du_email = DU_Input_Field[1].text;
         du_phone = "+" + DU_GetNumbers(DU_Phone_Country.options[DU_Phone_Country.value].text) + DU_Input_Field[2].text;
@@ -671,7 +760,7 @@ public class UIController : MonoBehaviour
         DU_Warning_Input[4].SetActive(true);
         DU_Warning_Input[5].SetActive(false);
 
-        if (DU_Input_Field[0].text == "")
+        if (DU_Input_Field[2].text == "" || DU_Input_Field[2].text.Length <= 6)
         {
             du_input3 = false;
             DU_Warning_Input[4].SetActive(false);
@@ -685,6 +774,11 @@ public class UIController : MonoBehaviour
 
     public void BackBtnDoubleUp()
     {
+        time = initTime;
+        Card_Info_BackButton.gameObject.SetActive(false);
+        CancelInvoke("DU_setInput2");
+        Card_Info_Redeem_Button.interactable = true;
+        Card_Info_DU_Button.interactable = true;
         doubleupBack = true;
         DoubleUpPage.SetActive(false);
         CardInfoPage.SetActive(true);
@@ -694,16 +788,7 @@ public class UIController : MonoBehaviour
     #region Double Up Spin Page Button
     public void DU_SpinButton()
     {
-        Voucher_Script.ClearList();
-        Voucher_Script.GetData();
-        foreach (VoucherEntity s in Voucher_Script.myList)
-        {
-            if (Voucher_Script.ChosenVoucher == s._id)
-            {
-                Voucher_Script.MinusUpdateData(s);
-                break;
-            }
-        }
+        time = initTime;
         Random_Script.MakeRandomProbability();
         Random_Script.CalculateProbability();
         StartCoroutine(DU_SpinWheel());
@@ -715,42 +800,50 @@ public class UIController : MonoBehaviour
 
     IEnumerator DU_SpinWheel()
     {
-        int counter = 18;
+        int counter = 24;
         float TimeWait = 0.01f;
         int countmulti = 0;
         if (Voucher_Script.ChosenVoucher == 1)
         {
-            countmulti = 4;
+            countmulti = 3; //1
         }
         else if (Voucher_Script.ChosenVoucher == 2)
         {
-            countmulti = 14;
+            countmulti = 13; //4
         }
         else if (Voucher_Script.ChosenVoucher == 3)
         {
-            countmulti = 8;
+            countmulti = 7; //2
         }
         else if (Voucher_Script.ChosenVoucher == 4)
         {
-            countmulti = 17;
+            countmulti = 16; //5
         }
         else if (Voucher_Script.ChosenVoucher == 5)
         {
-            countmulti = 11;
+            countmulti = 10; //3
         }
         else if (Voucher_Script.ChosenVoucher == 6)
         {
-            countmulti = 20;
+            countmulti = 19; //6
+        }
+        else if (Voucher_Script.ChosenVoucher == 7)
+        {
+            countmulti = 22; //7
+        }
+        else if (Voucher_Script.ChosenVoucher == 8)
+        {
+            countmulti = 25; //8
         }
         counter *= 5;
         counter += countmulti;
-        int slowdown = counter - 18;
+        int slowdown = counter - 24;
         Debug.Log(counter);
         for (int i = 0; i < counter; i++)
         {
-            if (DU_Spin_Object.transform.position.y >= 2697.2f)
+            if (DU_Spin_Object.transform.position.y >= 3298.5f)
             {
-                DU_Spin_Object.transform.position = new Vector2(DU_Spin_Object.transform.position.x, -938.8f);
+                DU_Spin_Object.transform.position = new Vector2(DU_Spin_Object.transform.position.x, -1549.5f);
             }
 
             DU_Spin_Object.transform.position = new Vector2(DU_Spin_Object.transform.position.x, DU_Spin_Object.transform.position.y + 202);
@@ -771,6 +864,7 @@ public class UIController : MonoBehaviour
     #region Spin Prize Page Button
     public void DU_SpinPrizeButton()
     {
+        time = initTime;
         SpinPrizePage_DU.SetActive(false);
         VoucherPage_DU.SetActive(true);
     }
@@ -779,6 +873,7 @@ public class UIController : MonoBehaviour
     #region Voucher Page Button
     public void DU_VoucherButton()
     {
+        time = initTime;
         Voucher_Script.ClearList();
         Voucher_Script.GetData();
         foreach (VoucherEntity s in Voucher_Script.myList)
@@ -820,6 +915,14 @@ public class UIController : MonoBehaviour
                 {
                     defaultremain = 45;
                 }
+                else if (s._id == 7)
+                {
+                    defaultremain = 60;
+                }
+                else if (s._id == 8)
+                {
+                    defaultremain = 200;
+                }
                 string remain = "remaining-" + s._type;
                 int temp_remain = PlayerPrefs.GetInt(remain, defaultremain);
                 temp_remain -= 1;
@@ -838,15 +941,11 @@ public class UIController : MonoBehaviour
     #region Print Voucher Page
     public void PrintVoucherPageFunction()
     {
+        time = initTime;
         Debug.LogError("File name = " + tempvouchername + ".pdf");
-        Print_Script.Print(tempvouchername);
-        //StartCoroutine(WaitRestartscene());
+        Print_Script.Print(tempvouchername); //printing voucher
     }
-    /*IEnumerator WaitRestartscene()
-    {
-        yield return new WaitForSeconds(15);
-        SceneManager.LoadScene("Main");
-    }*/
+
     public void OnCompleteAnimationCard()
     {
         SceneManager.LoadScene("Main");
